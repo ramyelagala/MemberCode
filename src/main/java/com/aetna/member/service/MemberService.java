@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.xml.ws.http.HTTPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,10 +21,11 @@ import com.aetna.member.dto.Login;
 import com.aetna.member.dto.Member;
 
 @RestController
+@Service
 public class MemberService {
 
 	@Autowired
-	MemberRepository memberRepo;
+	private MemberRepository memberRepo;
 	
 	@RequestMapping(value = "/createMember", method = RequestMethod.POST)
 	public Member createMember(@Valid @RequestBody Member member) throws IOException
@@ -38,7 +40,7 @@ public class MemberService {
 	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
 	public Member updateMember(@Valid @RequestBody Member member)
 	{
-		String originalPass = member.getPassword();
+		//String originalPass = member.getPassword();
 
 		//member.setPassword(Base64.getEncoder().encodeToString(originalPass.getBytes()));
 		
