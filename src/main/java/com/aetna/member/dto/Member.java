@@ -20,9 +20,9 @@ public class Member {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String memberId;
 	
-	@NotNull
-	@NotBlank
-	@Column(name ="SSN")
+	@NotNull(message = "SSN Should not be Null")
+	@NotBlank(message = "SSN Should not be Null")
+	@Column(name ="SSN" ,unique = true)
 	private String ssn;
 	
 	@NotBlank
@@ -33,8 +33,8 @@ public class Member {
 	@Column(name ="LastName")
 	private String lastName;
 	
-	@Email
-	@Column(name ="Email")
+	@Email(message = "Email Should be Proper")
+	@Column(name ="Email",unique = true)
 	private String email;
 	
 	@NotBlank
