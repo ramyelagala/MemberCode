@@ -1,5 +1,6 @@
 package com.aetna.member.dto;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +10,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name = "member")
+//@Table(name = "members")
+@Table(name ="members")
 public class Member {
 	
+    private static final long serialVersionUID = 1L;
 
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String memberId;
 	
 	@NotNull(message = "SSN Should not be Null")

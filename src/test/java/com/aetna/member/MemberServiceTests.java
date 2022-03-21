@@ -2,12 +2,12 @@ package com.aetna.member;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +17,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.aetna.member.controller.MemberController;
 import com.aetna.member.dao.MemberRepository;
 import com.aetna.member.dto.Login;
 import com.aetna.member.dto.Member;
@@ -38,13 +38,13 @@ public class MemberServiceTests {
 	
 	@Before
 	public void init() {
-		MockitoAnnotations.openMocks(this);
+		//MockitoAnnotations.openMocks(this);
 		this.memberService = new MemberService();
 		ReflectionTestUtils.setField(this.memberService, "memberRepo", this.memberRepo);
 	}
 	
 	@Test
-	public void createTests() throws IOException
+	public void createTests() throws IOException, SQLIntegrityConstraintViolationException
 	{
 		Member member = new Member();
 		member.setAddress("address");
@@ -57,6 +57,22 @@ public class MemberServiceTests {
 		member.setUuid("uuid");
 		when(this.memberRepo.save(member)).thenReturn(member);
 		assertNotNull(memberService.createMember(member));
+	}
+	
+	@Test
+	public void createTestDb() throws IOException, SQLIntegrityConstraintViolationException
+	{
+		Member member = new Member();
+		member.setAddress("address");
+		member.setEmail("email@gma.com");
+		member.setFirstName("firstName");
+		member.setLastName("lastName");
+		//member.setMemberId("memberId");
+		member.setPassword("password");
+		member.setSsn("ssn");
+		member.setUuid("uuid");
+		MemberController controller = new MemberController();
+		assertNotNull(controller.createMember(member));
 	}
 	
 	@Test
